@@ -2,7 +2,8 @@
 #-*-utf-8-*-
 #json处理库
 import json
-import parser
+import re
+import configparser
 import time
 #自动编码库
 import codecs
@@ -43,6 +44,7 @@ def OutInfo():
     print("=       3.搜索会员信息        =")
     print("=       4.注册账号            =")
     print("=       5.登录账号            =")
+    print("=       6.退出系统            =")
     print("================================")
 
 def AddMemInfo():
@@ -106,6 +108,10 @@ def UserChois():
             OutInfo()
             UserChois()
         elif Opt == 4:
+            userRegist()
+        elif Opt == 5:
+            userLogin()
+        elif Opt == 6:
             ExitSystem()
         else:
             OutInfo()
@@ -113,11 +119,120 @@ def UserChois():
             UserChois()
     else:
         print("输入错误,请重新输入1-4任意一个选项:\n")
+def iniConfig():
+    global config
+    # global list_data
+    # curpath = os.path.dirname(os.path.realpath(__file__))
+    # cfgpath = os.path.join(curpath, "UserInfo.ini")
+    # config.read(cfgpath, encoding="utf-8")
+    # if config.has_section('UserInfo'):
+    #     config.read("UserInfo.ini", encoding="utf-8")
+    #     list_data = config.items("UserInfo")
 
-MemInfo = dict();
-OutInfo()
-UserChois()
+    if config.has_section('UserInfo') == False:
+        config.add_section('UserInfo')
+
+def userRegist():
+    global config
+    # print(len(config.sections()))
+    # if(0):
+    #     print("真")
+    # else:
+    #     print("假")
+    # exit(0)
+    # config.read('UserInfo.ini')
+    username = input("请输入用户的名字：")
+    password  = input("请输入用户的密码：")
+    if config.has_option('UserInfo',username):
+        if username in config.options('UserInfo'):
+          print("用户名已经存在")
+          username = input("请输入用户的名字：")
+    else:
+            # if re.match(r'^(.*[a-z][A-Z])(.*[0-9]{4,})$',userName) and re.match(r'^(.*[a-z][A-Z])(.*[0-9]{6,})$',userPassword):
+            print("注册成功，现在可以登录了！")
+            # print(config.sections())
+            # config.read('UserInfo.ini')
+            # config.sections()
+            #config.add_section('Section1')
+            # if config.has_section('UserInfo'):
+            # print(config.has_section('UserInfo'))
+            # config.read("UserInfo.ini", encoding="utf-8")
+            # list_data = config.items("UserInfo")
+            # print(list_data)
+            # list_data.append({username:password})
+            # for i in list_data:
+                # print(list(i.keys())[0],list(i.values())[0])
+            # config.set('UserInfo',list(i.keys())[0],list(i.values())[0])
+            # else:
+            config.set('UserInfo', username, password)
+            # if len(config.sections()) == 0:
+            #     print("1")
+            #     config.add_section('UserInfo')
+            #     config.set("UserInfo", userName, userPassword)
+            # else:
+            #     config.set("UserInfo", userName, userPassword)
+            #     config.set("UserInfo", userName, userPassword)
+            # else:
+            # userInfo = {userName:userPassword}
+            config.write(open("UserInfo.ini",'a',encoding="utf-8"))
+            # else:
+            # print("密码或用户名含有非法字符如：&等")
+            # userRegist()
+    OutInfo()
+
+def userLogin():
+    pass
+    # userName = input("请输入用户的名字：")
+    # userPassword = input("请输入用户的密码：")
+    # config = configparser.ConfigParser()
+    # config.sections()
+    # config.read('./Config/UserInfo.conf')
+    # print(config.items('UserInfo'))
+    # if userName == config.items('UserInfo'):
+
+
+
+
+
+
+list_data = None
+config = configparser.RawConfigParser()
+# print(dir(config))
+# exit()
+# MemInfo = dict();
+# OutInfo()
+iniConfig()
+userRegist()
+# UserChois()
 # a = {'zhangsan':'nan'}
 # a = {'lisi':'k'}
 # print(len(a))
-
+#密码校验
+'''
+校验密码是否合法
+def check_password(passwd):
+    if re.match(r'^(?=.*[A-Za-z])(?=.*[0-9])\w{6,}$',passwd):
+        print "password %s correct"%passwd
+        return True
+    else:
+        print "password %s is invalid"%passwd
+        return False
+        
+rightname="skykylin"
+rightpsw="123"
+输入计次
+id=0
+while 1：
+    name=input("请输入用户名")
+    psw=input("请输入密码")
+    if name==rightname and psw==right:
+        print("你登录成功了")
+        exit(0)
+    else：
+        if id<2：
+            print("请重新输入")
+            id=id+1
+        elif id==2：
+            print("你错的有点多哦")
+            exit(O)
+'''
