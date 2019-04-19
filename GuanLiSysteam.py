@@ -71,7 +71,7 @@ def AddMemInfo():
 def DisplayMemInfo():
     if len(MemInfo) > 0:
         for i in MemInfo.keys():
-          print("会员姓名\t会员的性别\t会员年龄");
+          print("会员姓名\t会员的性别\t会员年龄")
           print(MemInfo.get(i)[0],"\t",MemInfo.get(i)[1],"\t",MemInfo.get(i)[2])
     else:
         print("请您先添加会员信息:")
@@ -121,6 +121,7 @@ def UserChois():
         print("输入错误,请重新输入1-4任意一个选项:\n")
 def iniConfig():
     global config
+    global list_data
     # global list_data
     # curpath = os.path.dirname(os.path.realpath(__file__))
     # cfgpath = os.path.join(curpath, "UserInfo.ini")
@@ -128,12 +129,20 @@ def iniConfig():
     # if config.has_section('UserInfo'):
     #     config.read("UserInfo.ini", encoding="utf-8")
     #     list_data = config.items("UserInfo")
-
+    try:
+        config.read("UserInfo.ini",encoding="utf-8")
+    except:
+        pass
     if config.has_section('UserInfo') == False:
         config.add_section('UserInfo')
+        list_data = []
+    else:
+        list_data = config.items("UserInfo")
 
 def userRegist():
     global config
+    global list_data
+    global username
     # print(len(config.sections()))
     # if(0):
     #     print("真")
@@ -159,12 +168,14 @@ def userRegist():
             # config.read("UserInfo.ini", encoding="utf-8")
             # list_data = config.items("UserInfo")
             # print(list_data)
-            # list_data.append({username:password})
-            # for i in list_data:
-                # print(list(i.keys())[0],list(i.values())[0])
-            # config.set('UserInfo',list(i.keys())[0],list(i.values())[0])
+            # print(list(list_data))
+            # print(type(list_data) is list)
+            print((username,password))
+            list_data.append((username,password))
+            for i in list_data:
+                config.set('UserInfo',i[0],i[1])
             # else:
-            config.set('UserInfo', username, password)
+            # config.set('UserInfo', username, password)
             # if len(config.sections()) == 0:
             #     print("1")
             #     config.add_section('UserInfo')
@@ -174,7 +185,7 @@ def userRegist():
             #     config.set("UserInfo", userName, userPassword)
             # else:
             # userInfo = {userName:userPassword}
-            config.write(open("UserInfo.ini",'a',encoding="utf-8"))
+            config.write(open("UserInfo.ini",'w',encoding="utf-8"))
             # else:
             # print("密码或用户名含有非法字符如：&等")
             # userRegist()
@@ -191,16 +202,12 @@ def userLogin():
     # if userName == config.items('UserInfo'):
 
 
-
-
-
-
 list_data = None
 config = configparser.RawConfigParser()
 # print(dir(config))
 # exit()
-# MemInfo = dict();
-# OutInfo()
+MemInfo = dict();
+OutInfo()
 iniConfig()
 userRegist()
 # UserChois()

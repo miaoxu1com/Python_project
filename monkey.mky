@@ -1,0 +1,36 @@
+#monkey脚本
+type = raw events
+count = 1
+speed = 1
+
+start data >>
+#启动程序
+LaunchActivity(com.tal.kaoyan,com.tal.kaoyan.ui.activity.SplashActivity)
+UserWait(5000)
+Tap(493,34)
+
+Tap(100,186)
+DispatchString(miaoxu1com)
+UserWait(2000)
+
+Tap(250,231)
+DispatchString(1012460248com)
+UserWait(2000)
+
+
+Tap(258,305)
+UserWait(5000)
+
+Drag(261,419,261,382)
+UserWait(2000)
+
+
+
+
+
+
+
+
+
+
+
