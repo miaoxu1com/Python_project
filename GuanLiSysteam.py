@@ -12,6 +12,7 @@ import xml.sax
 import os
 import logging
 import types
+#逻辑可以提升你代码的执行效率 比如添加成功就提示添加成功  没有成功要提示用户没有成功
 #logging.basicConfig(level=logging.INFO)
 # logging.basicConfig(level=logging.INFO)
 # type('abc') == str
